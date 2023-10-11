@@ -106,6 +106,27 @@ class Run:
         pass
 
 
+class AutoRun:
+
+    @staticmethod
+    def enter(boy, e):
+        pass
+
+    @staticmethod
+    def exit(boy, e):
+        pass
+
+    @staticmethod
+    def do(boy):
+        boy.frame = (boy.frame + 1) % 8
+        boy.x += boy.dir * 10
+
+    @staticmethod
+    def draw(boy):
+        boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100, 100, boy.x, boy.y)
+        pass
+
+
 class StateMachine:
     def __init__(self, boy):
         self.boy = boy
