@@ -116,8 +116,10 @@ class AutoRun:
     def enter(boy, e):
         if boy.action == 2:
             boy.action = 0
+            boy.dir = -1
         elif boy.action == 3:
             boy.action = 1
+            boy.dir = 1
         boy.idle_start_time = get_time()
         pass
 
@@ -129,6 +131,12 @@ class AutoRun:
     def do(boy):
         boy.frame = (boy.frame + 1) % 8
         boy.x += boy.dir * 10
+        if boy.x < 10:
+            boy.dir *= -1
+            boy.action = 1
+        elif boy.x > 790:
+            boy.dir *= -1
+            boy.action = 0
         if get_time() - boy.idle_start_time > 5:
             boy.state_machine.handle_event(('TIME_OUT', 0))
 
