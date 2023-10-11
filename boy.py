@@ -28,8 +28,10 @@ def left_down(e):
 def left_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
 
+
 def a_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_a
+
 
 class Sleep:
 
@@ -112,6 +114,11 @@ class AutoRun:
 
     @staticmethod
     def enter(boy, e):
+        if boy.action == 2:
+            boy.action = 0
+        elif boy.action == 3:
+            boy.action = 1
+        boy.idle_start_time = get_time()
         pass
 
     @staticmethod
@@ -122,6 +129,8 @@ class AutoRun:
     def do(boy):
         boy.frame = (boy.frame + 1) % 8
         boy.x += boy.dir * 10
+        if get_time() - boy.idle_start_time > 5:
+            boy.state_machine.handle_event(('TIME_OUT', 0))
 
     @staticmethod
     def draw(boy):
